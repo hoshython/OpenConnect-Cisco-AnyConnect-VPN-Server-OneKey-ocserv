@@ -2,7 +2,6 @@
 
 install() {
 
-user=$(whoami)
 ip=$(hostname -I|cut -f1 -d ' ')
 echo "Your Server IP address is:$ip"
 echo -e "\e[32mInstalling gnutls-bin\e[39m"
@@ -110,7 +109,7 @@ ocpasswd -c /etc/ocserv/ocpasswd -u $username
 }
 
 addUserFromFile() {
-filename="/home/$user/users.txt"
+filename="/home/$(whoami)/users.txt"
 while read line; do
 n=1
 # reading each line
