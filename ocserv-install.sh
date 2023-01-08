@@ -110,7 +110,7 @@ ocpasswd -c /etc/ocserv/ocpasswd -u $username
 }
 
 addUserFromFile() {
-filename='/home/$user/users.txt'
+filename="/home/$user/users.txt"
 while read line; do
 n=1
 # reading each line
