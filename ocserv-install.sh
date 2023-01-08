@@ -2,9 +2,9 @@
 
 install() {
 
+user=$(whoami)
 ip=$(hostname -I|cut -f1 -d ' ')
 echo "Your Server IP address is:$ip"
-
 echo -e "\e[32mInstalling gnutls-bin\e[39m"
 
 apt install gnutls-bin
@@ -109,6 +109,23 @@ read username
 ocpasswd -c /etc/ocserv/ocpasswd -u $username
 }
 
+addUserFromFile() {
+filename='/home/$user/users.txt'
+while read line; do
+n=1
+# reading each line
+user="$(echo $line | awk '{ print $1}')"
+pass="$(echo $line | awk '{ print $2}')"
+echo "$n- add user $user"
+echo "$pass" | ocpasswd -c /etc/ocserv/ocpasswd $user
+((n++))
+done < $filename
+#user="$(echo $line | awk '{ print $1}')"
+#pass="$(echo $line | awk '{ print $2}')"
+#echo "add user $user"
+#echo "$pass" | ocpasswd -c /etc/ocserv/ocpasswd $user
+}
+
 if [[ "$EUID" -ne 0 ]]; then
 	echo "Please run as root"
 	exit 1
@@ -141,7 +158,7 @@ echo '
 
 
 PS3='Please enter your choice: '
-options=("Install" "Uninstall" "Add User" "Change Password" "Show Users" "Delete User" "Lock User" "Unlock User" "Quit")
+options=("Install" "Uninstall" "Add User" "Change Password" "Show Users" "Delete User" "Lock User" "Unlock User" "Quit" "Add User From File")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -177,6 +194,10 @@ do
 	    unlockUser
 			break
 	    ;;
+        "Add User From File")
+      addUserFromFile
+      break
+      ;;
         "Quit")
             break
             ;;
