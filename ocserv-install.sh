@@ -52,6 +52,7 @@ sed -i -e 's@cisco-client-compat@cisco-client-compat = true@g' /etc/ocserv/ocser
 sed -e '/udp-port/ s/^#*/#/' -i /etc/ocserv/ocserv.conf
 sed -e 's/^keepalive\ =\ 300/keepalive\ =\ 30/' -i /etc/ocserv/ocserv.conf
 sed -e '/idle-timeout/ s/^#*/#/' -i /etc/ocserv/ocserv.conf
+sed -e '/mobile-idle-timeou/ s/^#*/#/' -i /etc/ocserv/ocserv.conf
 sed -i -e 's@##auth = "#auth = "pam""@auth = "plain[passwd=/etc/ocserv/ocpasswd]"@g' /etc/ocserv/ocserv.conf
 
 sed -i -e 's@server-cert = /etc/ssl/certs/ssl-cert-snakeoil.pem@server-cert = /etc/ocserv/server-cert.pem@g' /etc/ocserv/ocserv.conf
